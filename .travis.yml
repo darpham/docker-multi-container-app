@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t darpham/docker-multi -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true darpham/docker-multi npm test
+
+after_success:
+  - docker build -t darpham/multi-client ./client
+  - docker build -t darpham/multi-nginx ./nginx
+  - docker build -t darpham/multi-server ./server
+  - docker build -t darpham/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push darpham/multi-client
+  - docker push darpham/multi-nginx
+  - docker push darpham/multi-server
+  - docker push darpham/multi-worker

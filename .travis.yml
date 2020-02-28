@@ -19,3 +19,17 @@ after_success:
   - docker push darpham/multi-nginx
   - docker push darpham/multi-server
   - docker push darpham/multi-worker
+
+
+deploy: 
+  # edge: true
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: docker-multi-container
+  env: DockerMultiContainer-env
+  bucket: elasticbeanstalk-us-west-1-505221876540
+  bucket_path: docker-multi-container
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

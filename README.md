@@ -16,3 +16,4 @@ Upon PR merge to Master
 Build test image and tests the code
 Build production image and upload to Docker Hub
 Push project to AWS Elastic Beanstalk for deployment
+.
